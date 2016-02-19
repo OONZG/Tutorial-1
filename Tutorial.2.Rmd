@@ -1,0 +1,67 @@
+---
+title: "Tutorial 2"
+author: "ZiGui"
+date: "12 February 2016"
+output: html_document
+---
+
+```{r.message=FALSE,echo=FALSE}
+library(ggplot2)
+library(dplyr)
+labs <- read.csv("C:\\Users\\ZiGui\\Desktop\\IS4250\\Tutorial\\Tutorial 2\\labs.csv")
+```
+
+a)
+Waiting Time KPI: 
+```{r.echo=FALSE, error=FALSE}
+summarise(labs, avg = mean(WaitTime))
+```
+
+Waiting Time Chart:
+```{r.echo=FALSE, error=FALSE}
+ggplot(labs, aes(WaitTime)) + geom_bar() 
+```
+
+Service Satisfaction Index:
+```{r.echo=FALSE, error=FALSE}
+count (labs, SvcSat)
+```
+
+Service Satisfaction Chart:
+```{r.echo=FALSE, error=FALSE}
+ggplot(labs, aes(SvcSat)) + geom_bar()
+```
+
+b)
+```{r.echo=FALSE, error=FALSE}
+ggplot(labs, aes(SvcSat, fill=Gender)) + geom_bar(position="dodge")
+```
+
+```{r.echo=FALSE, error=FALSE}
+ggplot(labs, aes(SvcSat, AGE)) + geom_count()
+```
+
+c) 
+```{r.echo=FALSE, error=FALSE}
+ggplot(labs, aes(SvcSat, WaitTime)) + geom_count()
+```
+Yes. 
+Patients that experienced shorter waiting time are generally more satisfied than those who experienced a longer waiting time.
+
+d)
+```{r.echo=FALSE, error=FALSE}
+labs <- mutate(labs, BMI = WT/(HT*HT))
+ggplot(labs, aes(TC, BMI)) + geom_point()
+```
+It is unlikely that BMI and Cholestrol level are correlated since the points are widely spreaded. 
+
+e)
+```{r.echo=FALSE, error=FALSE}
+labs <- mutate(labs, BMI = WT/(HT*HT))
+labs <- arrange(labs, ETHNIC, AGE, BMI)
+labs <- select (labs, ETHNIC, AGE, SBP, TC, BMI) 
+print(labs)
+```
+The estimated BMI will be less than 19.4.
+Increasing SBP and decreasing TC will lower BMI.
+
